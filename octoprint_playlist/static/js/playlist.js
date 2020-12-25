@@ -28,6 +28,7 @@ $(function() {
 		self.autoStartQueue = ko.observable(false);
 		self.autoQueueFiles = ko.observable(false);
 		self.start_time = ko.observable();
+		self.throttled_start_time = ko.computed(self.start_time).extend({ throttle: 400 });
 		self.auto_repeat_queue = ko.observable(false);
 
 		self.onBeforeBinding = function() {
@@ -83,7 +84,7 @@ $(function() {
 				}
 			});
 
-			self.start_time.subscribe(function(data) {
+			self.throttled_start_time.subscribe(function(data) {
 				self.settings.saveData({
 					plugins: {
 						playlist: {
